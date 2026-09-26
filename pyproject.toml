@@ -1,6 +1,6 @@
 [project]
 name = "tvnoms-api"
-version = "0.3.32"
+version = "0.3.33"
 description = "Add your description here"
 requires-python = ">=3.12"
 dependencies = [
