@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import patch, MagicMock
 from datetime import datetime, timezone
-from app.utils.iptv_parser_ng import Channel, Programme, XMLTVParser
+from app.utils.iptv_parser_ng import Channel, Programme, XMLTVParser, parse_xmltv_file, parse_xmltv_string
 
 
 class TestXMLTVParser:
@@ -151,3 +151,80 @@ class TestXMLTVParser:
         assert "writer" in programme.credits
         assert len(programme.credits["actor"]) == 2
         assert programme.credits["actor"][0]["role"] == "Main Character"
+
+    @pytest.mark.unit
+    def test_parse_xmltv_string_imports_channel_and_programme(self):
+        """Test XMLTV content import from string into channel/programme objects."""
+        xmltv = """
+        <tv>
+          <channel id="demo.channel">
+            <display-name lang="en">Demo Channel</display-name>
+            <icon src="http://example.com/icon.png" />
+          </channel>
+          <programme start="20260101120000 +0000" stop="20260101130000 +0000" channel="demo.channel">
+            <title lang="en">Demo Show</title>
+            <desc lang="en">Imported from XMLTV</desc>
+            <category lang="en">News</category>
+          </programme>
+        </tv>
+        """
+
+        channels = parse_xmltv_string(xmltv)
+
+        assert len(channels) == 1
+        channel = channels[0]
+        assert channel.id == "demo.channel"
+        assert channel.display_names[0]["text"] == "Demo Channel"
+        assert len(channel.programmes) == 1
+        assert channel.programmes[0].titles[0]["text"] == "Demo Show"
+
+    @pytest.mark.unit
+    def test_parse_xmltv_string_creates_channel_for_orphan_programme(self):
+        """Test programme import still works when channel metadata is missing."""
+        xmltv = """
+        <tv>
+          <programme start="20260101120000 +0000" stop="20260101123000 +0000" channel="orphan.channel">
+            <title lang="en">Orphan Show</title>
+          </programme>
+        </tv>
+        """
+
+        channels = parse_xmltv_string(xmltv)
+
+        assert len(channels) == 1
+        assert channels[0].id == "orphan.channel"
+        assert len(channels[0].programmes) == 1
+        assert channels[0].programmes[0].titles[0]["text"] == "Orphan Show"
+
+    @pytest.mark.unit
+    def test_parse_xmltv_string_invalid_xml_raises_value_error(self):
+        """Test invalid XML input fails with parser validation error."""
+        parser = XMLTVParser()
+
+        with pytest.raises(ValueError):
+            parser.parse_string("<tv><channel></tv>")
+
+    @pytest.mark.unit
+    def test_parse_xmltv_file_imports_data(self, tmp_path):
+        """Test XMLTV file import path returns parsed channels/programmes."""
+        xmltv_file = tmp_path / "epg.xml"
+        xmltv_file.write_text(
+            """
+            <tv>
+              <channel id="file.channel">
+                <display-name lang="en">File Channel</display-name>
+              </channel>
+              <programme start="20260102120000 +0000" stop="20260102130000 +0000" channel="file.channel">
+                <title lang="en">From File</title>
+              </programme>
+            </tv>
+            """,
+            encoding="utf-8",
+        )
+
+        channels = parse_xmltv_file(str(xmltv_file))
+
+        assert len(channels) == 1
+        assert channels[0].id == "file.channel"
+        assert len(channels[0].programmes) == 1
+        assert channels[0].programmes[0].titles[0]["text"] == "From File"

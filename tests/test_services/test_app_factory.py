@@ -17,7 +17,7 @@ class TestAppFactory:
     def test_create_app_has_correct_title(self):
         """Test that the app has the correct title."""
         app = create_app()
-        assert app.title == "Xtreamium Backend"
+        assert app.title == "TV Noms Backend"
 
     @pytest.mark.unit
     def test_create_app_has_version(self):

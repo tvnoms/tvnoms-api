@@ -6,7 +6,7 @@ import sqlalchemy.orm as orm
 
 # Get the absolute path to the app directory
 APP_DIR = os.path.dirname(os.path.abspath(__file__))
-DEFAULT_DB_PATH = os.path.join(APP_DIR, "xtreamium.db")
+DEFAULT_DB_PATH = os.path.join(APP_DIR, "tvnoms.db")
 
 DATABASE_URL = os.environ.get('DATABASE_URL') or f"sqlite:///{DEFAULT_DB_PATH}"
 engine = sa.create_engine(

@@ -47,7 +47,7 @@ async def get_proxy_version() -> str:
         timeout = httpx.Timeout(10.0)
         async with httpx.AsyncClient(timeout=timeout) as client:
             response = await client.get(
-                "https://api.github.com/repos/xtreamium/xtreamium-proxy/releases/latest"
+                "https://api.github.com/repos/tvnoms/tvnoms-proxy/releases/latest"
             )
             response.raise_for_status()
             data = response.json()

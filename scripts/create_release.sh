@@ -328,7 +328,7 @@ Release v$NEW_VERSION"
 ### Changes since v$CURRENT_VERSION:
 $CHANGELOG
 
-**Full Changelog**: https://github.com/xtreamium/xtreamium-api/compare/v$CURRENT_VERSION...v$NEW_VERSION"
+**Full Changelog**: https://github.com/tvnoms/tvnoms-api/compare/v$CURRENT_VERSION...v$NEW_VERSION"
     else
         # No previous version tag, get recent commits
         RECENT_COMMITS=$(git log --oneline -10 --pretty=format:'- %s (%h)' 2>/dev/null || echo "- Initial release")
@@ -343,14 +343,14 @@ $RECENT_COMMITS"
         --notes "$RELEASE_NOTES" \
         --latest; then
         print_success "GitHub release v$NEW_VERSION created successfully"
-        print_status "Release URL: https://github.com/xtreamium/xtreamium-api/releases/tag/v$NEW_VERSION"
+        print_status "Release URL: https://github.com/tvnoms/tvnoms-api/releases/tag/v$NEW_VERSION"
     else
         print_error "Failed to create GitHub release. You can create it manually at:"
-        print_error "https://github.com/xtreamium/xtreamium-api/releases/new?tag=v$NEW_VERSION"
+        print_error "https://github.com/tvnoms/tvnoms-api/releases/new?tag=v$NEW_VERSION"
     fi
 else
     print_warning "GitHub CLI not available. Please create the release manually at:"
-    print_warning "https://github.com/xtreamium/xtreamium-api/releases/new?tag=v$NEW_VERSION"
+    print_warning "https://github.com/tvnoms/tvnoms-api/releases/new?tag=v$NEW_VERSION"
 fi
 
 # Clear the trap since we completed successfully

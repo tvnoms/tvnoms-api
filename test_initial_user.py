@@ -7,7 +7,7 @@ import tempfile
 import sys
 
 # Add the app directory to the path
-sys.path.insert(0, '/srv/dev/xtreamium/xtreamium-api')
+sys.path.insert(0, '/srv/dev/tvnoms/tvnoms-api')
 
 from app import database
 from app.models.user import User

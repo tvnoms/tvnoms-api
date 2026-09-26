@@ -11,7 +11,7 @@ class TestConfig:
         """Test that settings instance exists and has expected values."""
         assert settings is not None
         assert isinstance(settings, Settings)
-        assert settings.PROJECT_NAME == "Xtreamium Backend"
+        assert settings.PROJECT_NAME == "TV Noms Backend"
         assert settings.API_PATH == "/api/v1"
 
     @pytest.mark.unit
@@ -38,7 +38,7 @@ class TestConfig:
     def test_settings_class_creation(self):
         """Test creating a new Settings instance."""
         test_settings = Settings()
-        assert test_settings.PROJECT_NAME == "Xtreamium Backend"
+        assert test_settings.PROJECT_NAME == "TV Noms Backend"
         assert test_settings.API_PATH == "/api/v1"
 
     @pytest.mark.unit
@@ -56,7 +56,20 @@ class TestConfig:
         test_settings = Settings()
         assert test_settings.API_PATH == '/api/v2'
 
-    @pytest.mark.unit 
+    @pytest.mark.unit
+    @patch.dict(
+        'os.environ',
+        {'BACKEND_CORS_ORIGINS': 'https://frontend.example.com,http://localhost:3000'}
+    )
+    def test_cors_origins_env_override(self):
+        """Test CORS origins can be overridden via environment."""
+        test_settings = Settings()
+        assert test_settings.BACKEND_CORS_ORIGINS == [
+            'https://frontend.example.com',
+            'http://localhost:3000',
+        ]
+
+    @pytest.mark.unit
     def test_cors_origins_types(self):
         """Test that all CORS origins are strings."""
         for origin in settings.BACKEND_CORS_ORIGINS:

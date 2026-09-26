@@ -181,3 +181,39 @@ class TestEPGParser:
         
         assert result == []
         mock_get_channel.assert_called_once_with("test-user-456", 123, "unknown.channel", test_session)
+
+    @pytest.mark.unit
+    @pytest.mark.asyncio
+    @patch('app.utils.epg_parser.requests.get')
+    @patch('app.utils.epg_parser.parse_xmltv_file')
+    @patch('app.utils.epg_parser.store_epg_channels')
+    @patch('app.utils.epg_parser.is_file_older_cache_time')
+    @patch('os.path.isfile')
+    async def test_cache_epg_force_imports_even_when_cache_fresh(
+        self,
+        mock_isfile,
+        mock_is_old,
+        mock_store_channels,
+        mock_parse_file,
+        mock_requests_get,
+        test_session,
+    ):
+        """Test force refresh always re-imports XMLTV data."""
+        mock_isfile.return_value = True
+        mock_is_old.return_value = False
+        mock_requests_get.return_value.content = b"<tv></tv>"
+        mock_parse_file.return_value = []
+        mock_store_channels.return_value = {'channels': 0, 'programmes': 0}
+
+        parser = EPGParser(
+            url="http://example.com/epg.xml",
+            server_id=123,
+            user_id="test-user-456"
+        )
+
+        with patch('builtins.open', mock_open()):
+            await parser.cache_epg(test_session, force=True)
+
+        mock_requests_get.assert_called_once_with("http://example.com/epg.xml", timeout=30)
+        mock_parse_file.assert_called_once()
+        mock_store_channels.assert_called_once()

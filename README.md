@@ -1,4 +1,4 @@
-# Xtreamium Backend
+# TV Noms Backend
 
 A FastAPI-based backend application for managing Xtream Codes IPTV services with EPG (Electronic Program Guide) support and XMLTV integration.
 
@@ -38,7 +38,7 @@ A FastAPI-based backend application for managing Xtream Codes IPTV services with
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd xtreamium-api
+   cd tvnoms-api
    ```
 
 2. **Set up virtual environment** (if not using UV)
@@ -86,10 +86,10 @@ The application uses environment variables for configuration. Key settings inclu
 
 ```bash
 # Database
-DATABASE_URL=sqlite:///./app/xtreamium.db
+DATABASE_URL=sqlite:///./app/tvnoms.db
 
 # Server
-XTREAMIUM_BACKEND_PORT=8000
+TVNOMS_BACKEND_PORT=8000
 
 # Authentication
 SECRET_KEY=your-secret-key-here
@@ -149,7 +149,7 @@ See [docs/MIGRATIONS.md](docs/MIGRATIONS.md) for detailed migration documentatio
 ## Project Structure
 
 ```
-xtreamium-api/
+tvnoms-api/
 ├── app/
 │   ├── api/              # API route handlers
 │   ├── models/           # SQLAlchemy database models
@@ -186,10 +186,10 @@ mypy .
 ### Docker Development
 ```bash
 # Build image
-docker build -t xtreamium-api .
+docker build -t tvnoms-api .
 
 # Run container
-docker run -p 8000:8000 xtreamium-api
+docker run -p 8000:8000 tvnoms-api
 ```
 
 ## Background Tasks

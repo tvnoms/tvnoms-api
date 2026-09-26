@@ -19,7 +19,7 @@ class EPGParser:
         self._user_id = user_id
         self._programs = {}
         cache_dir = (os.getenv("CACHE_PATH") or
-                     os.path.join(xdg_cache_home(), "xtreamium"))
+                     os.path.join(xdg_cache_home(), "tvnoms"))
 
         self._cache_file = os.path.join(
             cache_dir, f"{user_id}", str(server_id), "epg.xml")

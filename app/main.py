@@ -19,7 +19,7 @@ def initialize_application():
     if app is not None:
         return app
 
-    logger.info("Starting Xtreamium API")
+    logger.info("Starting TV Noms API")
 
     try:
         # Skip database initialization during testing
@@ -57,7 +57,7 @@ if __name__ == '__main__':
     logging.getLogger("uvicorn").handlers = []
     logging.getLogger("uvicorn.access").handlers = []
 
-    port = int(os.environ.get('XTREAMIUM_BACKEND_PORT', 8000))
+    port = int(os.environ.get('TVNOMS_BACKEND_PORT', 8000))
     disable_ssl = os.environ.get('DISABLE_SSL', 'false').lower() == 'true'
 
     logger.info(f"Starting uvicorn server on port {port}")

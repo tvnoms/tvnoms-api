@@ -155,8 +155,8 @@ cython_debug/
 .idea
 .vscode
 .working/
-xtreamium.db
-app/xtreamium.db
+tvnoms.db
+app/tvnoms.db
 
 .env
 .env.production

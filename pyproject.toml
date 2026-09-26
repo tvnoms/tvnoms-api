@@ -1,5 +1,5 @@
 [project]
-name = "xtreamium-api"
+name = "tvnoms-api"
 version = "0.3.31"
 description = "Add your description here"
 requires-python = ">=3.12"
@@ -53,4 +53,8 @@ dev = [
 ]
 
 [dependency-groups]
-dev = ["factory-boy>=3.3.3", "pytest-asyncio>=1.2.0"]
+dev = [
+    "factory-boy>=3.3.3",
+    "pytest-asyncio>=1.2.0",
+    "pytest-cov>=7.1.0",
+]

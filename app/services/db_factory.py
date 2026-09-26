@@ -13,7 +13,7 @@ def create_database():
     logger.info("Initializing database with migrations...")
 
     # Log database URL for debugging
-    db_url = os.getenv('DATABASE_URL', 'sqlite:///./xtreamium.db')
+    db_url = os.getenv('DATABASE_URL', 'sqlite:///./tvnoms.db')
     logger.info(f"Database URL: {db_url}")
 
     try:

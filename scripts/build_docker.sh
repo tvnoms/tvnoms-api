@@ -1,16 +1,16 @@
 #!/bin/bash
 
-# Build Docker image for xtreamium-api
+# Build Docker image for tvnoms-api
 # Usage: ./build_docker.sh [tag] [run_mode]
 # 
 # Arguments:
-#   tag      - Docker image tag (default: xtreamium-api:latest)
+#   tag      - Docker image tag (default: tvnoms-api:latest)
 #   run_mode - Build mode: production or development (default: production)
 
 set -e
 
 # Default values
-DEFAULT_TAG="xtreamium-api:latest"
+DEFAULT_TAG="tvnoms-api:latest"
 DEFAULT_RUN_MODE="production"
 
 # Parse arguments

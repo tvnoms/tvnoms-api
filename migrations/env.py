@@ -30,7 +30,7 @@ if config.config_file_name is not None:
 
 # Set the database URL from environment variable (same as the app uses)
 APP_DIR = os.path.dirname(os.path.dirname(__file__))
-DEFAULT_DB_PATH = os.path.join(APP_DIR, "app", "xtreamium.db")
+DEFAULT_DB_PATH = os.path.join(APP_DIR, "app", "tvnoms.db")
 DATABASE_URL = os.environ.get('DATABASE_URL') or f"sqlite:///{DEFAULT_DB_PATH}"
 
 # Set the database URL for Alembic to use
