@@ -12,9 +12,11 @@ class Server(database.Base):
         from_attributes = True
 
     __tablename__ = "servers"
+    __table_args__ = (sa.UniqueConstraint("owner_id", "name", name="uq_servers_owner_id_name"),)
+
     id = sa.Column(sa.String(36), primary_key=True, index=True, default=lambda: str(uuid.uuid4()))
     owner_id = sa.Column(sa.String(36), sa.ForeignKey("users.id"), nullable=False)
-    name = sa.Column(sa.String, unique=True, index=True)
+    name = sa.Column(sa.String, index=True)
     url = sa.Column(sa.String, index=True)
     username = sa.Column(sa.String, index=True)
     password = sa.Column(sa.String, index=True)
